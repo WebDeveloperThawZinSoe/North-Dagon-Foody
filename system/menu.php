@@ -60,11 +60,7 @@
 							<input required  type="file" class="form-control" id="image" name="feature_image">
 						</div>
 
-						<div class="mb-3">
-							<label for="image" class="form-label">Image</label>
-							<input required  type="file" class="form-control" id="image" name="image[]" multiple>
-						</div>
-
+					
 						<div class="mb-3">
 							<label for="image" class="form-label">Descripton</label>
 							<textarea required  class="form-control" id="image" name="description"> </textarea>
@@ -106,7 +102,7 @@
 													<td><?php echo $r['price'] ?></td>
 													<td><?php echo $r['category'] ?></td>
 												
-													<td><a class="btn btn-info" href="backend.php?delete_category=<?php echo
+													<td><a class="btn btn-info" href="menu-detail.php?menu-id=<?php echo
 													 $r['id'] ?>">View Detail</a></td>
 												</tr>
 													<?php

@@ -37,6 +37,35 @@ use plainview\sdk_broadcast\collections\html;
 
     *************************/
 
+    /************************
+     Image Filter
+     ************************/
+
+    /**** image filter start ****/
+    function image_filter($data){
+        $name = $data["name"];
+        $tmp_name = $data["tmp_name"];
+        $size = $data["size"];
+        $error = $data["error"];
+        $type = $data["type"];
+        if($error == 0){
+           if($type == "image/png" || $type == "image/jpg" || $type == "image/jpeg" || $type == "image/gif"){
+               if($size < 2000000){
+                   global $genearteName;
+                   $genearteName = rand(0,1000) . "_" . $name;
+                   move_uploaded_file($tmp_name,"upload/".$genearteName);
+               }else{
+                 $_SESSION["error"] = "File Size is too big";
+               }
+           }else{
+             $_SESSION["error"] = "We Only Accept PNG JPG JPEG GIF";
+           }
+        }else{
+           $_SESSION["error"] = "File Has Error";
+        }
+     }
+     /**** image filter end ****/
+
     /*************************
 
         Ready to use function start 
@@ -162,24 +191,26 @@ use plainview\sdk_broadcast\collections\html;
         $category = xss_filter($_POST["category"]);
         $description = xss_filter($_POST["description"]);
         $feature_image = $_FILES["feature_image"];
-        $image = $_FILES["image"];
-        $image_name = $_FILES["image"]["name"];
-        $file_name = implode(",",$image_name);
+        image_filter($feature_image);
+        // $image = $_FILES["image"];
+        // $image_name = $_FILES["image"]["name"];
+        // $file_name = implode(",",$image_name);
        
-        if(!empty($image_name)){
-            foreach($image_name as $key=>$value){
-                // $gen_name = rand(0,1000) . "_" . $value;
-                // $targetFilePath = "upload/" . $gen_name;
-                $targetFilePath = "upload/" . $value;
-                move_uploaded_file($_FILES["image"]["tmp_name"][$key],$targetFilePath);
-                // $gen_name2 = rand(0,1000) . "_" . $feature_image["name"];
-                $targetFilePath = "upload/" . $feature_image["name"];
-                move_uploaded_file($_FILES["feature_image"]["tmp_name"],$targetFilePath);
-                // echo $gen_name2;
-            }
-            $feature_image = $feature_image["name"];
-            // echo $gen_name2;
-            $sql = "INSERT INTO menu(name,price,category,description,feature_image,images) VALUES ('$name','$price','$category','$description','$feature_image','$file_name')";
+        // if(!empty($feature_image)){
+        //     foreach($image_name as $key=>$value){
+        //         // $gen_name = rand(0,1000) . "_" . $value;
+        //         // $targetFilePath = "upload/" . $gen_name;
+        //         $targetFilePath = "upload/" . $value;
+        //         move_uploaded_file($_FILES["image"]["tmp_name"][$key],$targetFilePath);
+        //         // $gen_name2 = rand(0,1000) . "_" . $feature_image["name"];
+        //         $targetFilePath = "upload/" . $feature_image["name"];
+        //         move_uploaded_file($_FILES["feature_image"]["tmp_name"],$targetFilePath);
+        //         // echo $gen_name2;
+        //     }
+        //     $feature_image = $feature_image["name"];
+        //     // echo $gen_name2;
+        //    
+                $sql = "INSERT INTO menu(name,price,category,description,feature_image) VALUES ('$name','$price','$category','$description','$genearteName')";
 
 
             if (!$mysqli -> query($sql)) {
@@ -193,7 +224,8 @@ use plainview\sdk_broadcast\collections\html;
               header("location:menu.php");
            
             
-        } 
+        // } 
+        
     }
 
     if(isset($_POST["login"])){
@@ -215,5 +247,31 @@ use plainview\sdk_broadcast\collections\html;
         $id = $_GET["delete_category"];
         DeleteData("category",$id,$mysqli,"category.php","category.php");
     }
-        
+
+    if(isset($_GET["menu-delete"])){
+        $id = $_GET["menu-delete"];
+        DeleteData("menu",$id,$mysqli,"menu.php","menu.php");
+    }
+    
+    if(isset($_POST["update_menu"])){
+        $id = $_POST["id"];
+        $name = xss_filter($_POST["name"]);
+        $price = xss_filter($_POST["price"]);
+        $category = xss_filter($_POST["category"]);
+        $description = xss_filter($_POST["description"]);
+        $feature_image = $_FILES["feature_image"];
+        image_filter($feature_image);
+        $sql = "UPDATE menu SET name='$name',price='$price',category='$category',discount='0',description='$description',feature_image='$genearteName' WHERE id=$id";
+
+
+        if (!$mysqli -> query($sql)) {
+            $_SESSION["error"] = "Menu data update fail ";
+          }else{
+            $_SESSION["success"] = "Menu data update success";
+          }
+   
+          $mysqli -> close();       
+         
+          header("location:menu.php");
+    }
 ?>
