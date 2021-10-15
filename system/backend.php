@@ -261,7 +261,7 @@ use plainview\sdk_broadcast\collections\html;
         $description = xss_filter($_POST["description"]);
         $feature_image = $_FILES["feature_image"];
         image_filter($feature_image);
-        $sql = "UPDATE menu SET name='$name',price='$price',category='$category',discount='0',description='$description',feature_image='$genearteName' WHERE id=$id";
+        $sql = "UPDATE menu SET name='$name',price='$price',category='$category',description='$description',feature_image='$genearteName' WHERE id=$id";
 
 
         if (!$mysqli -> query($sql)) {

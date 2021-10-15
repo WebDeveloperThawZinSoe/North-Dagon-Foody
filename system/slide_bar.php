@@ -30,18 +30,7 @@
                                 <div class="sb-nav-link-icon">  <i class="fas fa-phone"></i></div>
                                 Contact
                             </a>
-                            <div class="sb-sidenav-menu-heading">POS System</div>
-
-                            <a class="nav-link" href="pos_order.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                                Make Order
-                            </a>
-
-                            <a class="nav-link" href="pos_order_history.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
-                                Order History
-                            </a>
-                          
+                            
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
