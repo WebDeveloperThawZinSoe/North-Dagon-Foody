@@ -1,0 +1,10 @@
+Post
+
+name
+image
+multi image 
+description
+price
+discount 
+category
+create_date
