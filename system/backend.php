@@ -131,6 +131,7 @@ use plainview\sdk_broadcast\collections\html;
        DeleteData("member",$id,$mysqli,"member.php","member.php");
     }
 
+
     if(isset($_POST["add_category"])){
         $username = xss_filter($_POST["username"]);
         $safe_username = $mysqli -> real_escape_string($username);
@@ -208,6 +209,11 @@ use plainview\sdk_broadcast\collections\html;
 
        $mysqli -> close();  
        header("location:index.php");
+    }
+
+    if(isset($_GET["delete_category"])){
+        $id = $_GET["delete_category"];
+        DeleteData("category",$id,$mysqli,"category.php","category.php");
     }
         
 ?>

@@ -73,7 +73,7 @@
 													<td><img src="upload/<?php echo $r['image'] ?>" class="img-responsive" width="300px" height="200px" alt=""></td>
 													<td><?php echo $r['username'] ?></td>
 													<td><?php echo $r['create_date'] ?></td>
-													<td><a class="btn btn-danger" href="backend.php?delete_user=<?php echo
+													<td><a class="btn btn-danger" href="backend.php?delete_category=<?php echo
 													 $r['id'] ?>" onclick="return confirm('Delete Confirm Account')">Delete</a></td>
 												</tr>
 													<?php
