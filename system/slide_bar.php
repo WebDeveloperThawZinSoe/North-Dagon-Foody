@@ -22,10 +22,6 @@
                                 Menu
                             </a>
 
-                            <a class="nav-link" href="contact.php">
-                                <div class="sb-nav-link-icon">  <i class="fas fa-phone"></i></div>
-                                Contact
-                            </a>
                             
                         </div>
                     </div>
