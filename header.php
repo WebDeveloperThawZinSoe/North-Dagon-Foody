@@ -34,3 +34,7 @@
 </head>
 
 <body>
+
+<?php
+  include_once "database_connection.php";
+?>

@@ -38,6 +38,7 @@
 	<header class="top-navbar">
 	<?php
 		include "nav.php";
+		include_once "database_connection.php";
 	?>
 	</header>
 	<!-- End header -->
@@ -67,116 +68,56 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="special-menu text-center">
-						<div class="button-group filter-button-group">
-							<button class="active" data-filter="*">All</button>
-							<button data-filter=".drinks">Drinks</button>
-							<button data-filter=".lunch">Lunch</button>
-							<button data-filter=".dinner">Dinner</button>
-						</div>
+				<div class="special-menu text-center">
+					<div class="button-group filter-button-group">
+						<button class="active" data-filter="*">All</button>
+						<?php
+						$sql = "SELECT * FROM  category";
+						$result = mysqli_query($connection, $sql);
+						if (mysqli_num_rows($result) > 0) {
+							foreach ($result as $r) {
+						?>
+								<button data-filter=".<?php echo $r['id'] ?>"><?php echo $r['name'] ?></button>
+						<?php
+							}
+						}
+						?>
+
 					</div>
+				</div>
 				</div>
 			</div>
 				
 			<div class="row special-list">
-				<div class="col-lg-4 col-md-6 special-grid drinks">
-					<div class="gallery-single fix">
-						<img src="images/img-01.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Drinks 1</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $7.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid drinks">
-					<div class="gallery-single fix">
-						<img src="images/img-02.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Drinks 2</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $9.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid drinks">
-					<div class="gallery-single fix">
-						<img src="images/img-03.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Drinks 3</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $10.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid lunch">
-					<div class="gallery-single fix">
-						<img src="images/img-04.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Lunch 1</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $15.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid lunch">
-					<div class="gallery-single fix">
-						<img src="images/img-05.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Lunch 2</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $18.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid lunch">
-					<div class="gallery-single fix">
-						<img src="images/img-06.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Lunch 3</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $20.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid dinner">
-					<div class="gallery-single fix">
-						<img src="images/img-07.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Dinner 1</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $25.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid dinner">
-					<div class="gallery-single fix">
-						<img src="images/img-08.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Dinner 2</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $22.79</h5>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-lg-4 col-md-6 special-grid dinner">
-					<div class="gallery-single fix">
-						<img src="images/img-09.jpg" class="img-fluid" alt="Image">
-						<div class="why-text">
-							<h4>Special Dinner 3</h4>
-							<p>Sed id magna vitae eros sagittis euismod.</p>
-							<h5> $24.79</h5>
-						</div>
-					</div>
-				</div>
+
+			<?php
+			$sql = "SELECT * FROM  menu ORDER BY id DESC";
+			$result = mysqli_query($connection, $sql);
+			if (mysqli_num_rows($result) > 0) {
+				foreach ($result as $r) {
+					$category = $r['category'];
+					$sql2 = "SELECT * FROM  category WHERE name='$category'";
+					$resultr = mysqli_query($connection, $sql2);
+					if (mysqli_num_rows($resultr) > 0) {
+						foreach ($resultr as $rr) {
+							$id = $rr;
+			?>
+							<div class="col-lg-4 col-md-6 special-grid <?php echo $rr['id'] ?>">
+								<div class="gallery-single fix">
+									<img style="height: 300px;" src="system/upload/<?php echo $r['feature_image'] ?>" class="img-fluid" alt="Image">
+									<div class="why-text">
+										<h4> <?php echo $r['name'] ?> </h4>
+										<p> <?php echo $r['description'] ?> </p>
+										<h5> <?php echo $r['price'] ?> </h5>
+									</div>
+								</div>
+							</div>
+			<?php
+						}
+					}
+				}
+			}
+			?>
 				
 			</div>
 		</div>

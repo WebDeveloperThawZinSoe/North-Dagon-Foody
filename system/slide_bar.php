@@ -21,11 +21,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-hamburger"></i></div>
                                 Menu
                             </a>
-                            <a class="nav-link" href="order.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                                Order
-                            </a>
-                          
+
                             <a class="nav-link" href="contact.php">
                                 <div class="sb-nav-link-icon">  <i class="fas fa-phone"></i></div>
                                 Contact
